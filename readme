@@ -1,0 +1,6 @@
+Graph of people and who they know.
+Check recfile input first.
+Absolutely no error checking done. Just wanted to get this out quick.
+Arguments must not have unquoted spaces.
+
+Depends: recutils, graphviz
