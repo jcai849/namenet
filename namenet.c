@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <graphviz/cgraph.h>
+#include <errno.h>
 #include <regex.h>
 #include "rec.h"
 
@@ -55,7 +56,10 @@ void extend_graph(Agraph_t *core_members, Agraph_t *graph, char **files) {
 	rec_init();
 	for (tail = agfstnode(core_members); tail;
 	     tail = agnxtnode(core_members, tail), files++) {
-		in = fopen(*files, "r");
+		if (!(in = fopen(*files, "r"))) {
+			perror(NULL);
+			abort();
+		};
 		parser = rec_parser_new(in, source);
 		while(rec_parse_record(parser, &record)) {
 			field = rec_record_get_field_by_name(record, "name", 0);
